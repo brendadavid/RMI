@@ -12,7 +12,7 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
   }
 
   public static void main(String[] args) {
-    int result;
+    int result = 0;
 
     if (args.length != 2) {
       System.out.println("Usage: java Jogador <ip local> <servidor>");
@@ -48,7 +48,7 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
 
     // registra()
     try {
-      jogo.registra();
+      result = jogo.registra();
     } catch (RemoteException e) {
       e.printStackTrace();
     }
@@ -56,7 +56,8 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
     for (int i = 0; i < 50; i++) {
       try {
         // joga
-        jogo.joga(111);
+        jogo.joga(result);
+        System.out.println(String.format("Jogada numero %d", i+1));
       } catch (RemoteException e) {
         e.printStackTrace();
       }
@@ -66,6 +67,11 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
     }
 
     // encerra
+    try {
+      jogo.encerra(result);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
   }
 
   public void encerrado() {
