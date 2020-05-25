@@ -53,8 +53,7 @@ public class Jogo extends UnicastRemoteObject implements JogoInterface {
         int chance = random.nextInt(100);
         System.out.println(String.format("Valor obtido: %d", chance));
         if (chance <= 0) {
-          jogador.encerrado();
-          System.out.println(String.format("Jogador %d foi encerrado!", id));
+          encerra(id);
         } else if (chance > 0 && chance <= 20) {
           jogador.cutucado();
           System.out.println(String.format("Jogador %d foi cutucado!", id));

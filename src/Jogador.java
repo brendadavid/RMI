@@ -7,9 +7,9 @@ import java.rmi.registry.LocateRegistry;
 
 public class Jogador extends UnicastRemoteObject implements JogadorInterface {
   private static final long serialVersionUID = -4613845962359855373L;
+  private static boolean quit = false;
 
-  public Jogador() throws RemoteException {
-  }
+  public Jogador() throws RemoteException {}
 
   public static void main(String[] args) {
     int result = 0;
@@ -55,9 +55,12 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
 
     for (int i = 0; i < 50; i++) {
       try {
+        if (quit) {
+          return;
+        }
         // joga
-        jogo.joga(result);
         System.out.println(String.format("Jogada numero %d", i+1));
+        jogo.joga(result);
       } catch (RemoteException e) {
         e.printStackTrace();
       }
@@ -76,6 +79,7 @@ public class Jogador extends UnicastRemoteObject implements JogadorInterface {
 
   public void encerrado() {
     System.out.println("encerrado");
+    quit = true;
   }
 
   public void cutucado() {
